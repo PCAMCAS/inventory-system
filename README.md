@@ -12,6 +12,8 @@
 
 Aplicación desarrollada con Next.js App Router, Prisma, Neon PostgreSQL y Vercel. Permite gestionar productos y categorías desde una interfaz web sencilla, conectada a una API REST creada dentro del propio proyecto mediante Route Handlers.
 
+Next.js permite crear endpoints HTTP dentro del directorio `app` mediante Route Handlers, usando archivos `route.ts`. Prisma Client se genera a partir del schema del proyecto, y Vercel permite configurar variables de entorno desde el panel del proyecto.
+
 | Despliegue | URL |
 |------------|-----|
 | Producción | [Vercel](https://inventory-system-r1nx1stgk-pcamcas-projects.vercel.app/products) |
@@ -50,7 +52,7 @@ Aplicación desarrollada con Next.js App Router, Prisma, Neon PostgreSQL y Verce
 
 | Backend | Uso |
 |---------|-----|
-| Next.js Route Handlers | Endpoints REST dentro de src/app/api |
+| Next.js Route Handlers | Endpoints REST dentro de `src/app/api` |
 | Prisma ORM | Acceso a base de datos |
 | PostgreSQL | Base de datos relacional |
 | Neon | Hosting serverless de PostgreSQL |
@@ -68,6 +70,7 @@ Aplicación desarrollada con Next.js App Router, Prisma, Neon PostgreSQL y Verce
 
 ## Estructura del proyecto
 
+~~~txt
 inventory-system/
 ├── docs/
 │   ├── arquitectura.md
@@ -80,7 +83,15 @@ inventory-system/
 │   ├── app/
 │   │   ├── api/
 │   │   │   ├── categories/
+│   │   │   │   ├── route.ts
+│   │   │   │   └── [id]/
+│   │   │   │       └── route.ts
 │   │   │   └── products/
+│   │   │       ├── route.ts
+│   │   │       └── [id]/
+│   │   │           ├── route.ts
+│   │   │           └── stock/
+│   │   │               └── route.ts
 │   │   ├── categories/
 │   │   │   └── page.tsx
 │   │   ├── products/
@@ -93,33 +104,46 @@ inventory-system/
 ├── package.json
 ├── prisma.config.ts
 └── README.md
+~~~
 
 ---
 
 ## Descargar y ejecutar
 
+Clonar el repositorio:
+
+~~~bash
 git clone https://github.com/PCAMCAS/inventory-system.git
 cd inventory-system
 npm install
+~~~
 
-Crear archivo .env en la raíz del proyecto:
+Crear un archivo `.env` en la raíz del proyecto:
 
+~~~env
 DATABASE_URL="postgresql://usuario:password@host-pooler/neondb?sslmode=verify-full"
 DIRECT_URL="postgresql://usuario:password@host-directo/neondb?sslmode=verify-full"
+~~~
 
 Generar Prisma Client y sincronizar la base de datos:
 
+~~~bash
 npx prisma generate
 npx prisma db push
 npm run seed
+~~~
 
 Ejecutar en desarrollo:
 
+~~~bash
 npm run dev
+~~~
 
 Abrir en el navegador:
 
+~~~txt
 http://localhost:3000/products
+~~~
 
 ---
 
@@ -127,12 +151,12 @@ http://localhost:3000/products
 
 | Comando | Descripción |
 |---------|-------------|
-| npm run dev | Ejecuta el servidor de desarrollo |
-| npm run build | Genera la build de producción |
-| npm run start | Ejecuta la build de producción |
-| npm run seed | Inserta datos iniciales en la base de datos |
-| npx prisma generate | Genera Prisma Client |
-| npx prisma db push | Sincroniza el schema con la base de datos |
+| `npm run dev` | Ejecuta el servidor de desarrollo |
+| `npm run build` | Genera la build de producción |
+| `npm run start` | Ejecuta la build de producción |
+| `npm run seed` | Inserta datos iniciales en la base de datos |
+| `npx prisma generate` | Genera Prisma Client |
+| `npx prisma db push` | Sincroniza el schema con la base de datos |
 
 ---
 
@@ -140,8 +164,8 @@ http://localhost:3000/products
 
 | Variable | Descripción |
 |----------|-------------|
-| DATABASE_URL | URL pooled de Neon usada por la aplicación |
-| DIRECT_URL | URL directa de Neon usada por Prisma CLI |
+| `DATABASE_URL` | URL pooled de Neon usada por la aplicación |
+| `DIRECT_URL` | URL directa de Neon usada por Prisma CLI |
 
 ---
 
@@ -149,15 +173,15 @@ http://localhost:3000/products
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| GET | /api/products | Lista productos |
-| POST | /api/products | Crea un producto |
-| PATCH | /api/products/[id] | Edita un producto |
-| DELETE | /api/products/[id] | Borra un producto |
-| PATCH | /api/products/[id]/stock | Actualiza el stock |
-| GET | /api/categories | Lista categorías |
-| POST | /api/categories | Crea una categoría |
-| PATCH | /api/categories/[id] | Edita una categoría |
-| DELETE | /api/categories/[id] | Borra una categoría si no tiene productos |
+| GET | `/api/products` | Lista productos |
+| POST | `/api/products` | Crea un producto |
+| PATCH | `/api/products/[id]` | Edita un producto |
+| DELETE | `/api/products/[id]` | Borra un producto |
+| PATCH | `/api/products/[id]/stock` | Actualiza el stock |
+| GET | `/api/categories` | Lista categorías |
+| POST | `/api/categories` | Crea una categoría |
+| PATCH | `/api/categories/[id]` | Edita una categoría |
+| DELETE | `/api/categories/[id]` | Borra una categoría si no tiene productos |
 
 ---
 
@@ -168,32 +192,43 @@ http://localhost:3000/products
 1. Subir el proyecto a GitHub.
 2. Crear proyecto en Vercel e importar el repositorio.
 3. Añadir variables de entorno:
-   - DATABASE_URL
-   - DIRECT_URL
+   - `DATABASE_URL`
+   - `DIRECT_URL`
 4. Mantener los comandos por defecto:
-   - Build Command: npm run build
-   - Install Command: npm install
+   - Build Command: `npm run build`
+   - Install Command: `npm install`
 5. Desplegar.
 
 ### Base de datos
 
 1. Crear proyecto en Neon.
-2. Copiar la URL pooled para DATABASE_URL.
-3. Copiar la URL directa para DIRECT_URL.
+2. Copiar la URL pooled para `DATABASE_URL`.
+3. Copiar la URL directa para `DIRECT_URL`.
 4. Ejecutar en local:
-   - npx prisma db push
-   - npm run seed
+
+~~~bash
+npx prisma db push
+npm run seed
+~~~
 
 ---
 
 ## Documentación adicional
 
-La carpeta docs contiene:
+La carpeta `docs/` contiene:
 
-- docs/arquitectura.md
-- docs/api.md
-- docs/state-management.md
+- `docs/arquitectura.md`
+- `docs/api.md`
+- `docs/state-management.md`
 
 ---
 
-*Desarrollado durante las prácticas en [Corner Estudios](https://www.corner-estudios.com) — Pedro Camacho — 2026*
+## Referencias
+
+- Next.js Route Handlers: https://nextjs.org/docs/app/getting-started/route-handlers
+- Prisma Client: https://www.prisma.io/docs/orm/prisma-client/setup-and-configuration/introduction
+- Vercel Environment Variables: https://vercel.com/docs/environment-variables
+
+---
+
+*Desarrollado durante las prácticas en [Corner Estudios](https://www.corner-estudios.com) — Pedro Campos — 2026*
