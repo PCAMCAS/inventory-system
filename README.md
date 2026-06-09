@@ -1,39 +1,199 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Next](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=FFF)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-## Getting Started
+# 📝 Inventory System
 
-First, run the development server:
+> Sistema básico de inventario con productos, categorías, filtros, API propia y base de datos PostgreSQL.
 
-```bash
+Aplicación desarrollada con Next.js App Router, Prisma, Neon PostgreSQL y Vercel. Permite gestionar productos y categorías desde una interfaz web sencilla, conectada a una API REST creada dentro del propio proyecto mediante Route Handlers.
+
+| Despliegue | URL |
+|------------|-----|
+| Producción | [Vercel](https://inventory-system-r1nx1stgk-pcamcas-projects.vercel.app/products) |
+| Productos | [Productos](https://inventory-system-r1nx1stgk-pcamcas-projects.vercel.app/products) |
+| Categorías | [Categorías](https://inventory-system-r1nx1stgk-pcamcas-projects.vercel.app/categories) |
+| API productos | [API Products](https://inventory-system-r1nx1stgk-pcamcas-projects.vercel.app/api/products) |
+| API categorías | [API Categories](https://inventory-system-r1nx1stgk-pcamcas-projects.vercel.app/api/categories) |
+
+---
+
+## Características
+
+- Listado de productos desde base de datos.
+- Listado de categorías desde base de datos.
+- Creación de productos.
+- Creación de categorías.
+- Borrado de productos.
+- Borrado de categorías con control para evitar borrar categorías con productos asociados.
+- Filtro de productos por texto de búsqueda.
+- Filtro de productos por categoría.
+- Actualización de stock con botones de incremento y decremento.
+- API REST propia con Route Handlers de Next.js.
+- Conexión a Neon PostgreSQL mediante Prisma.
+- Despliegue en Vercel.
+
+---
+
+## Tecnologías
+
+| Frontend | Uso |
+|----------|-----|
+| Next.js | Framework principal de la aplicación |
+| React | Construcción de la interfaz |
+| TypeScript | Tipado del proyecto |
+| Tailwind CSS | Estilos rápidos y responsive |
+
+| Backend | Uso |
+|---------|-----|
+| Next.js Route Handlers | Endpoints REST dentro de src/app/api |
+| Prisma ORM | Acceso a base de datos |
+| PostgreSQL | Base de datos relacional |
+| Neon | Hosting serverless de PostgreSQL |
+| @prisma/adapter-pg | Adaptador PostgreSQL usado por Prisma |
+
+| Auxiliares | Uso |
+|------------|-----|
+| Vercel | Despliegue de producción |
+| GitHub | Repositorio y control de versiones |
+| Zod | Validación de datos en endpoints |
+| TSX | Ejecución del seed en TypeScript |
+| Shadcn UI | Componentes base instalados para la interfaz |
+
+---
+
+## Estructura del proyecto
+
+inventory-system/
+├── docs/
+│   ├── arquitectura.md
+│   ├── api.md
+│   └── state-management.md
+├── prisma/
+│   ├── schema.prisma
+│   └── seed.ts
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── categories/
+│   │   │   └── products/
+│   │   ├── categories/
+│   │   │   └── page.tsx
+│   │   ├── products/
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── lib/
+│       └── db.ts
+├── .env.example
+├── package.json
+├── prisma.config.ts
+└── README.md
+
+---
+
+## Descargar y ejecutar
+
+git clone https://github.com/PCAMCAS/inventory-system.git
+cd inventory-system
+npm install
+
+Crear archivo .env en la raíz del proyecto:
+
+DATABASE_URL="postgresql://usuario:password@host-pooler/neondb?sslmode=verify-full"
+DIRECT_URL="postgresql://usuario:password@host-directo/neondb?sslmode=verify-full"
+
+Generar Prisma Client y sincronizar la base de datos:
+
+npx prisma generate
+npx prisma db push
+npm run seed
+
+Ejecutar en desarrollo:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir en el navegador:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000/products
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Scripts disponibles
 
-To learn more about Next.js, take a look at the following resources:
+| Comando | Descripción |
+|---------|-------------|
+| npm run dev | Ejecuta el servidor de desarrollo |
+| npm run build | Genera la build de producción |
+| npm run start | Ejecuta la build de producción |
+| npm run seed | Inserta datos iniciales en la base de datos |
+| npx prisma generate | Genera Prisma Client |
+| npx prisma db push | Sincroniza el schema con la base de datos |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Variables de entorno
 
-## Deploy on Vercel
+| Variable | Descripción |
+|----------|-------------|
+| DATABASE_URL | URL pooled de Neon usada por la aplicación |
+| DIRECT_URL | URL directa de Neon usada por Prisma CLI |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# inventory-system
+## Endpoints principales
 
-redeploy
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | /api/products | Lista productos |
+| POST | /api/products | Crea un producto |
+| PATCH | /api/products/[id] | Edita un producto |
+| DELETE | /api/products/[id] | Borra un producto |
+| PATCH | /api/products/[id]/stock | Actualiza el stock |
+| GET | /api/categories | Lista categorías |
+| POST | /api/categories | Crea una categoría |
+| PATCH | /api/categories/[id] | Edita una categoría |
+| DELETE | /api/categories/[id] | Borra una categoría si no tiene productos |
+
+---
+
+## Desplegar en Vercel
+
+### Aplicación
+
+1. Subir el proyecto a GitHub.
+2. Crear proyecto en Vercel e importar el repositorio.
+3. Añadir variables de entorno:
+   - DATABASE_URL
+   - DIRECT_URL
+4. Mantener los comandos por defecto:
+   - Build Command: npm run build
+   - Install Command: npm install
+5. Desplegar.
+
+### Base de datos
+
+1. Crear proyecto en Neon.
+2. Copiar la URL pooled para DATABASE_URL.
+3. Copiar la URL directa para DIRECT_URL.
+4. Ejecutar en local:
+   - npx prisma db push
+   - npm run seed
+
+---
+
+## Documentación adicional
+
+La carpeta docs contiene:
+
+- docs/arquitectura.md
+- docs/api.md
+- docs/state-management.md
+
+---
+
+*Desarrollado durante las prácticas en [Corner Estudios](https://www.corner-estudios.com) — Pedro Camacho — 2026*
